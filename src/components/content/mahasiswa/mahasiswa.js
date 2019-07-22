@@ -87,12 +87,8 @@ class Mahasiswa extends React.Component {
         alert("ini current mahasiswa delete "+ JSON.stringify(this.state.currentMahasiswa))
     }
 
-
-
-
-    
+     
     render(){
-        
         return (
             
             <div>
@@ -132,7 +128,9 @@ class Mahasiswa extends React.Component {
                                 <th>Agama</th>
                                 <th>Alamat</th>
                                 <th>Jurusan</th>
+                                <th>Hobby</th>
                                 <th>Action</th>
+                                
                             </tr>
                         </thead>
                     <tbody>
@@ -147,6 +145,7 @@ class Mahasiswa extends React.Component {
                                     <td>{row.kode_agama}</td>
                                     <td>{row.alamat}</td>
                                     <td>{row.kode_jurusan}</td>
+                                    <td>{row.hobby}</td>
                                     <td>
                                         <Link to='#'>
                                         

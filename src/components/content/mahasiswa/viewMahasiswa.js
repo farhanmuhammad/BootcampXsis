@@ -50,6 +50,13 @@ class ViewMahasiswa extends React.Component{
                                 <input readOnly class="form-control" value={this.props.mahasiswa.kode_jurusan}/>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-3 control-label">hobby</label>
+
+                                <div class="col-sm-9 ">
+                                <input readOnly class="form-control" value={this.props.mahasiswa.hobby}/>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     </div>

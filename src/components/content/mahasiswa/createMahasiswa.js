@@ -12,8 +12,16 @@ class CreateMahasiswa extends React.Component{
                 nama_mahasiswa:'',
                 kode_agama:'',
                 alamat:'',
-                kode_jurusan:''
-            }
+                kode_jurusan:'',
+                hobby:[]
+            },
+            hobbyList:[
+            {name: 'baca', isChecked: false},
+            {name: 'nyanyi', isChecked: false},
+            {name: 'berenang', isChecked: false},
+            {name: 'jogging', isChecked: false},
+            {name: 'kayang', isChecked: false}    
+            ]
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -110,6 +118,16 @@ class CreateMahasiswa extends React.Component{
                         <input type="text"class="form-control"
                         name ="kode_jurusan" 
                         value={this.state.formdata.kode_jurusan} 
+                        onChange={this.changeHandler}/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Hobby</label>
+
+                        <div class="col-sm-9 ">
+                        <input type="text"class="form-control"
+                        name ="hobby" 
+                        value={this.state.formdata.hobby} 
                         onChange={this.changeHandler}/>
                         </div>
                     </div>

@@ -10,7 +10,8 @@ class EditMahasiswa extends React.Component{
                 nama_mahasiswa: '',
                 alamat: '',
                 kode_agama: '',
-                kode_jurusan: ''
+                kode_jurusan: '',
+                hobby: ''
             }
         }
         this.submitHandler = this.submitHandler.bind(this)
@@ -122,6 +123,16 @@ class EditMahasiswa extends React.Component{
                                  name="kode_jurusan"
                                  onChange={this.changeHandler} 
                                  value={this.state.formdata.kode_jurusan}/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-3 control-label">hobby</label>
+
+                                <div class="col-sm-9 ">
+                                <input  class="form-control"
+                                 name="hobby"
+                                 onChange={this.changeHandler} 
+                                 value={this.state.formdata.hobby}/>
                                 </div>
                             </div>
                         </div>
