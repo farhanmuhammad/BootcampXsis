@@ -151,7 +151,11 @@ class Mahasiswa extends React.Component {
                                         <Link to='#'>
                                         
                                         <span onClick= {()=> {this.viewModalHandler(row.id)}} class='fa fa-book' style={{fontSize: '18px', paddingRight:'30px' }} data-toggle="modal" data-target="#modal-default"></span>
+                                        </Link>
+                                        <Link to='#'>
                                         <span onClick= {()=> {this.editModalHandler(row.kode_mahasiswa)}} class='fa fa-edit' style={{fontSize: '18px', paddingRight:'30px'}}data-toggle="modal" data-target="#edit-modal-default"></span>
+                                        </Link>
+                                        <Link to='#'>
                                         <span onClick= {()=> {this.deleteModalHandler(row.kode_mahasiswa)}} class='fa fa-trash' style={{fontSize: '18px', paddingRight:'30px'}}data-toggle="modal" data-target="#delete-modal-default"></span>
                                         </Link>
                                     </td>
