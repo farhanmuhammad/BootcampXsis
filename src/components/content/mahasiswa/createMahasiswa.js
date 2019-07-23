@@ -141,17 +141,20 @@ class CreateMahasiswa extends React.Component{
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Hobby</label>
-
+                        <div class="col-sm-9">
                         {this.state.hobbyList.map((hob,i)=>{
                             return(
-                                <div class ="input-group mb-3 input-group-sm">
-                                <label for="text"> 
-                                <input type="checkbox" value={hob.name} checked={hob.isChecked} onChange={this.onAddingItem(i)}/> {hob .name}
+                                <div class ="input-group mb-3 input-group-sm col-sm-9">
+                                
+                                <input id={"checkbox"+i} type="checkbox" value={hob.name} checked={hob.isChecked} onChange={this.onAddingItem(i)}/> 
+                                <label for={"checkbox"+i} > 
+                                {hob .name}
 
                                 </label>
                                 </div>
                             )
-                        })}                  
+                        })}
+                        </div>                  
                     </div>
                 </div>
             </form>

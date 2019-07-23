@@ -47,7 +47,7 @@ class EditMahasiswa extends React.Component{
                })
            })
         }
-        alert(JSON.stringify(this.state.hobbyList))
+        // alert(JSON.stringify(this.state.hobbyList))
     }
     changeHandler(e) {
 
