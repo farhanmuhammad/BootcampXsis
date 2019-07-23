@@ -5,9 +5,9 @@ import ViewMahasiswa from './viewMahasiswa'
 import DeleteMahasiswa from './deleteMahasiswa'
 import CreateMahasiswa from './createMahasiswa'
 import EditMahasiswa from './editMahasiswa'
+var $  = require( 'jquery' );
 
-import { Link } from 'react-router-dom';
-import DeletMahasiswa from './deleteMahasiswa.js';
+
 
 
 class Mahasiswa extends React.Component { 
@@ -15,8 +15,10 @@ class Mahasiswa extends React.Component {
         super(props)
         this.state={
             mahasiswa:[],
-            currentMahasiswa:{}
+            currentMahasiswa:{},
+            body:''
         }
+        
 
         this.viewModalHandler = this.viewModalHandler.bind(this)
         this.editModalHandler = this.editModalHandler.bind(this)
@@ -36,6 +38,8 @@ class Mahasiswa extends React.Component {
         this.setState({
             mahasiswa: response.data.message
         })
+        // alert(this.state.mahasiswa)
+        
     }
     
     componentDidMount(){ // sebelum kerender halamannya datanya udah di get duluan
@@ -86,9 +90,32 @@ class Mahasiswa extends React.Component {
         })
         alert("ini current mahasiswa delete "+ JSON.stringify(this.state.currentMahasiswa))
     }
-
+    
+    
      
     render(){
+        alert(JSON.stringify(this.state.mahasiswa))
+        window.$('#example2').DataTable({
+            
+            paging: true,
+            data: this.state.mahasiswa,
+            columns : [{data:'kode_mahasiswa'},
+                       {data: 'nama_mahasiswa'},
+                       {data: 'kode_agama'},
+                       {data: 'alamat'},
+                       {data: 'kode_jurusan'},
+                       {data: 'hobby'}],
+            
+            
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: false,
+            autoWidth: true
+        })
+        
+
+
         return (
             
             <div>
@@ -122,46 +149,17 @@ class Mahasiswa extends React.Component {
                     <table id="example2" class="table table-bordered table-stripeds">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                
                                 <th>Kode Mahasiswa</th>
                                 <th>Nama Mahasiswa</th>
                                 <th>Agama</th>
                                 <th>Alamat</th>
                                 <th>Jurusan</th>
                                 <th>Hobby</th>
-                                <th>Action</th>
-                                
                             </tr>
                         </thead>
-                    <tbody>
-                        {
-                            
-                            this.state.mahasiswa.map((row,x)=>
-                                <tr>
-                                    
-                                    <td>{x+1}</td>
-                                    <td>{row.kode_mahasiswa}</td>
-                                    <td>{row.nama_mahasiswa}</td>
-                                    <td>{row.kode_agama}</td>
-                                    <td>{row.alamat}</td>
-                                    <td>{row.kode_jurusan}</td>
-                                    <td>{row.hobby}</td>
-                                    <td>
-                                        <Link to='#'>
-                                        
-                                        <span onClick= {()=> {this.viewModalHandler(row.id)}} class='fa fa-book' style={{fontSize: '18px', paddingRight:'30px' }} data-toggle="modal" data-target="#modal-default"></span>
-                                        </Link>
-                                        <Link to='#'>
-                                        <span onClick= {()=> {this.editModalHandler(row.kode_mahasiswa)}} class='fa fa-edit' style={{fontSize: '18px', paddingRight:'30px'}}data-toggle="modal" data-target="#edit-modal-default"></span>
-                                        </Link>
-                                        <Link to='#'>
-                                        <span onClick= {()=> {this.deleteModalHandler(row.kode_mahasiswa)}} class='fa fa-trash' style={{fontSize: '18px', paddingRight:'30px'}}data-toggle="modal" data-target="#delete-modal-default"></span>
-                                        </Link>
-                                    </td>
-                                </tr>
-                            )
-                        }
-                    </tbody>
+                        
+                    
                     </table>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import apiconfig from '../../../configs/api.config.json'
+import { throwStatement } from '@babel/types';
 
 
 class CreateMahasiswa extends React.Component{
@@ -33,8 +34,25 @@ class CreateMahasiswa extends React.Component{
             formdata:tmp
         })
     }
+    onAddingItem = (i) =>(event)=> {
+      
+        this.setState((state) => {
+          state.hobbyList[i].isChecked = !state.hobbyList[i].isChecked; // ngerubah tidak check jadi check
+          return {
+            hobbyList: state.hobbyList  
+          }
+
+        })
+        // alert(JSON.stringify(this.state.hobbyList))
+      }
     submitHandler(){ // handler submitnya
         let token = localStorage.getItem(apiconfig.LS.TOKEN)
+        let trueHobby = this.state.hobbyList.filter(row => row.isChecked === true)
+        let strHobby=''
+        trueHobby.map((row,i)=>{
+            strHobby=strHobby+row.name+','
+        })
+        this.state.formdata.hobby=strHobby.substring(0,strHobby.length-1)
         let option ={
             url : apiconfig.BASE_URL+apiconfig.ENDPOINTS.MAHASISWA,
             method : "post",
@@ -124,12 +142,16 @@ class CreateMahasiswa extends React.Component{
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Hobby</label>
 
-                        <div class="col-sm-9 ">
-                        <input type="text"class="form-control"
-                        name ="hobby" 
-                        value={this.state.formdata.hobby} 
-                        onChange={this.changeHandler}/>
-                        </div>
+                        {this.state.hobbyList.map((hob,i)=>{
+                            return(
+                                <div class ="input-group mb-3 input-group-sm">
+                                <label for="text"> 
+                                <input type="checkbox" value={hob.name} checked={hob.isChecked} onChange={this.onAddingItem(i)}/> {hob .name}
+
+                                </label>
+                                </div>
+                            )
+                        })}                  
                     </div>
                 </div>
             </form>

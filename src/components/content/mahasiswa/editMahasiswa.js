@@ -11,20 +11,43 @@ class EditMahasiswa extends React.Component{
                 alamat: '',
                 kode_agama: '',
                 kode_jurusan: '',
-                hobby: ''
-            }
+                hobby: []
+            },
+            hobbyList:[
+            {name: 'baca', isChecked: false},
+            {name: 'nyanyi', isChecked: false},
+            {name: 'berenang', isChecked: false},
+            {name: 'jogging', isChecked: false},
+            {name: 'kayang', isChecked: false}    
+            ],
+            hobbyListBefore:[]
+           
         }
         this.submitHandler = this.submitHandler.bind(this)
         this.changeHandler = this.changeHandler.bind(this)
     }
     
+    
     componentWillReceiveProps(newProps) {
-        
+       
         this.setState({
             formdata: newProps.edit_mahasiswa
-
         })
+        this.state.hobbyList.map((row,i)=>{
 
+            row.isChecked = false;
+        })
+        if(newProps.edit_mahasiswa.hobby){ // check ada hooby apa negga
+           this.state.hobbyList.map((row,x)=>{ // looping semua hoobby list
+               newProps.edit_mahasiswa.hobby.split(',').map((row2,i)=>{ //misahin hooby dari database dan looping
+                   if(row.name.toLowerCase()==row2.trim()) // chech apakah hooby 1 sama dengan hooby dari tadibase
+                   {
+                       row.isChecked= true;
+                   }
+               })
+           })
+        }
+        alert(JSON.stringify(this.state.hobbyList))
     }
     changeHandler(e) {
 
@@ -35,9 +58,26 @@ class EditMahasiswa extends React.Component{
         })
 
     }
+    onAddingItem = (i) =>(event)=> {
+      
+        this.setState((state) => {
+          state.hobbyList[i].isChecked = !state.hobbyList[i].isChecked; // ngerubah tidak check jadi check
+          return {
+            hobbyList: state.hobbyList  
+          }
+
+        })
+        // alert(JSON.stringify(this.state.hobbyList))
+      }
 
     submitHandler(){
         let token = localStorage.getItem(apiconfig.LS.TOKEN)
+        let trueHobby = this.state.hobbyList.filter(row => row.isChecked ===true)
+        let strHobby =''
+        trueHobby.map((row,i)=>{
+            strHobby=strHobby+row.name+','
+        })
+        this.state.formdata.hobby=strHobby.substring(0,strHobby.length-1)
         let option ={
             url: apiconfig.BASE_URL+apiconfig.ENDPOINTS.MAHASISWA,
             method: "put",
@@ -125,16 +165,23 @@ class EditMahasiswa extends React.Component{
                                  value={this.state.formdata.kode_jurusan}/>
                                 </div>
                             </div>
+                            <div class="form-group"></div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">hobby</label>
+                                <label for="inputEmail3" class="col-sm-3 control-label">Hobby</label>
+                                <div class="col-sm-9">
+                                {this.state.hobbyList.map((hob,i)=>{
+                                 return(
+                                      <div class ="input-group mb-3 input-group-sm col-sm-3">
+                                      <label for="text"> 
+                                      <input type="checkbox" value={hob.name} checked={hob.isChecked} onChange={this.onAddingItem(i)}/> {hob .name}
 
-                                <div class="col-sm-9 ">
-                                <input  class="form-control"
-                                 name="hobby"
-                                 onChange={this.changeHandler} 
-                                 value={this.state.formdata.hobby}/>
-                                </div>
+                                       </label>
+                                       </div>
+                                    )
+                                })}            
+                                </div>      
                             </div>
+                            
                         </div>
                     </form>
                     </div>
