@@ -75,7 +75,7 @@ class EditMahasiswa extends React.Component{
         let trueHobby = this.state.hobbyList.filter(row => row.isChecked ===true)
         let strHobby =''
         trueHobby.map((row,i)=>{
-            strHobby=strHobby+row.name+','
+            strHobby=strHobby+row.name+'-'
         })
         this.state.formdata.hobby=strHobby.substring(0,strHobby.length-1)
         let option ={

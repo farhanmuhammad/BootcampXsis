@@ -29,6 +29,8 @@ class CreateMahasiswa extends React.Component{
     }
     changeHandler(e){ // untuk bisa ngisi form
         let tmp=this.state.formdata
+        // alert("ini value "+ e.target.value)
+        // alert("ini name "+ e.target.name)
         tmp[e.target.name]=e.target.value
         this.setState({
             formdata:tmp
@@ -50,7 +52,7 @@ class CreateMahasiswa extends React.Component{
         let trueHobby = this.state.hobbyList.filter(row => row.isChecked === true)
         let strHobby=''
         trueHobby.map((row,i)=>{
-            strHobby=strHobby+row.name+','
+            strHobby=strHobby+row.name+'-'
         })
         this.state.formdata.hobby=strHobby.substring(0,strHobby.length-1)
         let option ={

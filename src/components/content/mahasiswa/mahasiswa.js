@@ -5,8 +5,8 @@ import ViewMahasiswa from './viewMahasiswa'
 import DeleteMahasiswa from './deleteMahasiswa'
 import CreateMahasiswa from './createMahasiswa'
 import EditMahasiswa from './editMahasiswa'
-var $  = require( 'jquery' );
-
+import { Link } from 'react-router-dom'
+import $ from 'jquery'
 
 
 
@@ -25,7 +25,7 @@ class Mahasiswa extends React.Component {
         this.getListMahasiswa = this.getListMahasiswa.bind(this)
 
     }   
-    async getListMahasiswa(){ //dibuat async karena render bootstrap dulu
+    getListMahasiswa(){ //dibuat async karena render bootstrap dulu
         let token = localStorage.getItem(apiconfig.LS.TOKEN)
         let option ={
             url : apiconfig.BASE_URL+apiconfig.ENDPOINTS.MAHASISWA,
@@ -34,11 +34,25 @@ class Mahasiswa extends React.Component {
                 "Authorization" : token
             }
         }
-        const response = await axios(option)
+        axios(option)
+        .then((response)=>{
+            
+            var dataset = [];
+            response.data.message.map((row,id)=>{
+        
+        
+            dataset.push([id+1,row.kode_mahasiswa,row.nama_mahasiswa,row.kode_agama,row.alamat,row.kode_jurusan,row.hobby]) //buattabel
+            
+            })
         this.setState({
-            mahasiswa: response.data.message
+            mahasiswa: dataset
         })
        
+        })
+        .catch((error)=>{
+            alert(error)
+        })
+        
        
         
     }
@@ -46,22 +60,15 @@ class Mahasiswa extends React.Component {
     componentDidMount(){ // sebelum kerender halamannya datanya udah di get duluan
         this.getListMahasiswa()
     }
-    async viewModalHandler(kode_mahasiswa){
-        // alert(id)
-        let tmp = {}
-         alert(JSON.stringify(this.state.mahasiswa))
-        this.state.mahasiswa.map((row)=>{
-            // alert(id +" "+ row.id)
-            if(kode_mahasiswa == row.kode_mahasiswa){
-                tmp = row
-            }
-        })
-        alert(JSON.stringify(tmp))
+    async viewModalHandler(data){
+        alert('masuk view modal handler '+data)
+        
+        // alert(JSON.stringify(tmp))
         await this.setState({
-            currentMahasiswa : tmp,
+            currentMahasiswa : data,
 
         })
-        alert("ini current mahasiswa" +" "+ JSON.stringify(this.state.currentMahasiswa))
+        // alert("ini current mahasiswa" +" "+ JSON.stringify(this.state.currentMahasiswa))
         // alert(this.state.currentMahasiswa)
         
     }
@@ -79,10 +86,11 @@ class Mahasiswa extends React.Component {
         })
 
     }
-    async deleteModalHandler(kode_mahasiswa){
+    async deleteModalHandler(data){
+        alert('masuk delete')
         let tmp = {}
         this.state.mahasiswa.map((row)=>{
-            if(kode_mahasiswa== row.kode_mahasiswa)
+            if(data== row.data)
             {
                 tmp = row
             }
@@ -97,30 +105,27 @@ class Mahasiswa extends React.Component {
     
      
     render(){
-        alert(JSON.stringify(this.state.mahasiswa))
-        this.state.mahasiswa.map((row,id)=>{
-            row.no = (id+1)
-            // alert(row.kode_mahasiswa)
-            // var actiondefault = "<a onClick=\""+  this.viewModalHandler(row.kode_mahasiswa) +"\"><span class='fa fa-file-text-o' style='fontSize: '18px', paddingRight: '30px', color: '#1f3a93'' data-toggle='modal' data-target='#modal-default'></span></a>"
-            // row.action = actiondefault
-            //"<link to='#'><span onClick={() => { this.viewModalHandler(row.id) }} class='fa fa-file-text-o' style={{ fontSize: '18px', paddingRight: '30px', color: '#1f3a93' }} data-toggle='modal' data-target='#modal-default'></span></link>"
+            var view = "<a href='#' class='editor_view'><span  class='btn fa fa-file-text-o' style={{ fontSize: '18px', paddingRight: '30px', color: '#1f3a93' }} data-toggle='modal' data-target='#modal-default'></span></a>"
+            var edit = "<a href='#' class='editor_edit'><span  class='btn fa fa-edit' style={{ fontSize: '18px', paddingRight: '30px', color: '#1f3a93' }} data-toggle='modal' data-target='#edit-modal-default'></span></a>" 
+            var del = "<a href='#' class='editor_del'><span  class='btn fa fa-trash' style={{ fontSize: '18px', paddingRight: '30px', color: '#1f3a93' }} data-toggle='modal' data-target='#delete-modal-default'></span></a>"
             
-        })
-        window.$('#example2').DataTable({
-            
+            var  table= window.$('#example2').DataTable({
+            destroy: true,
             paging: true,
+            dataSrc:"",
             data: this.state.mahasiswa,
             columns : [
-                       {data: 'no'},
-                       {data: 'kode_mahasiswa'},
-                       {data: 'nama_mahasiswa'},
-                       {data: 'kode_agama'},
-                       {data: 'alamat'},
-                       {data: 'kode_jurusan'},
-                       {data: 'hobby'},
-                       {data: 'action'}
-            ],
+                       {title: 'no'},
+                       {title: 'kode_mahasiswa'},
+                       {title: 'nama_mahasiswa'},
+                       {title: 'kode_agama'},
+                       {title: 'alamat'},
+                       {title: 'kode_jurusan'},
+                       {title: 'hobby'},
+                       {defaultContent: view+edit+del}
+                ],
             
+                
             
             lengthChange: true,
             searching: true,
@@ -128,6 +133,28 @@ class Mahasiswa extends React.Component {
             info: true,
             autoWidth: true
         })
+        var _=this
+        window.$('#example2').on('click', 'a.editor_view', function (e) {
+            e.preventDefault();
+            var data = table.row( $(this).parents('tr') ).data();
+            _.viewModalHandler(data)
+           
+        } );
+        var _=this
+        window.$('#example2').on('click', 'a.editor_edit', function (e) {
+            e.preventDefault();
+            var data = table.row( $(this).parents('tr') ).data();
+            _.editModalHandler(data)
+           
+        } );
+        var _=this
+        window.$('#example2').on('click', 'a.editor_del', function (e) {
+            e.preventDefault();
+            var data = table.row( $(this).parents('tr') ).data();
+            _.deleteModalHandler(data)
+           
+        } );
+
         
 
 
@@ -162,7 +189,7 @@ class Mahasiswa extends React.Component {
                 <div><button class="btn btn-primary" data-toggle="modal" data-target="#create-modal-default">Tambah Mahasiswa</button></div>
                 <div class='box-body'>
                     <table id="example2" class="table table-bordered table-stripeds">
-                        <thead>
+                        {/* <thead>
                             <tr>
                                 <th>no</th>
                                 <th>Kode Mahasiswa</th>
@@ -173,7 +200,7 @@ class Mahasiswa extends React.Component {
                                 <th>Hobby</th>
                                 <th>action</th>
                             </tr>
-                        </thead>
+                        </thead> */}
                         
                     
                     </table>

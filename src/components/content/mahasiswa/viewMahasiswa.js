@@ -8,7 +8,7 @@ class ViewMahasiswa extends React.Component{
                 <div class="modal-dialog">
                     <div class="modal-content bg-warning">
                     <div class="modal-header">
-                        <h4 class="modal-title">{this.props.mahasiswa.nama_mahasiswa}</h4>
+                        <h4 class="modal-title">{this.props.mahasiswa[0]}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     </div>
@@ -19,42 +19,42 @@ class ViewMahasiswa extends React.Component{
                                 <label for="inputEmail3" class="col-sm-3 control-label">kode mahasiswa</label>
 
                                 <div class="col-sm-9 ">
-                                <input readOnly class="form-control" value={this.props.mahasiswa.kode_mahasiswa}/>
+                                <input readOnly class="form-control" value={this.props.mahasiswa[1]}/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">Nama mahasiswa</label>
 
                                 <div class="col-sm-9 ">
-                                <input readOnly class="form-control" value={this.props.mahasiswa.nama_mahasiswa}/>
+                                <input readOnly class="form-control" value={this.props.mahasiswa[2]}/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">Agama</label>
 
                                 <div class="col-sm-9 ">
-                                <input readOnly class="form-control" value={this.props.mahasiswa.kode_agama}/>
+                                <input readOnly class="form-control" value={this.props.mahasiswa[3]}/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">Alamat</label>
 
                                 <div class="col-sm-9 ">
-                                <input readOnly class="form-control" value={this.props.mahasiswa.alamat}/>
+                                <input readOnly class="form-control" value={this.props.mahasiswa[4]}/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">Jurusan</label>
 
                                 <div class="col-sm-9 ">
-                                <input readOnly class="form-control" value={this.props.mahasiswa.kode_jurusan}/>
+                                <input readOnly class="form-control" value={this.props.mahasiswa[5]}/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">hobby</label>
 
                                 <div class="col-sm-9 ">
-                                <input readOnly class="form-control" value={this.props.mahasiswa.hobby}/>
+                                <input readOnly class="form-control" value={this.props.mahasiswa[6]}/>
                                 </div>
                             </div>
                         </div>
