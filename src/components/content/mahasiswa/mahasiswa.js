@@ -41,7 +41,7 @@ class Mahasiswa extends React.Component {
             response.data.message.map((row,id)=>{
         
         
-            dataset.push([id+1,row.kode_mahasiswa,row.nama_mahasiswa,row.kode_agama,row.alamat,row.kode_jurusan,row.hobby]) //buattabel
+            dataset.push({'no':(id+1),'kode_mahasiswa':row.kode_mahasiswa,'nama_mahasiswa':row.nama_mahasiswa,'kode_agama':row.kode_agama,'alamat':row.alamat,'kode_jurusan':row.kode_jurusan,'hobby':row.hobby}) //buattabel
             
             })
         this.setState({
@@ -61,42 +61,45 @@ class Mahasiswa extends React.Component {
         this.getListMahasiswa()
     }
     async viewModalHandler(data){
-        alert('masuk view modal handler '+data)
-        
-        // alert(JSON.stringify(tmp))
+        let tmp = {}
+        this.state.mahasiswa.map((row)=>{
+            if(data.kode_mahasiswa == row.kode_mahasiswa){
+                tmp = row
+            }
+        })
         await this.setState({
-            currentMahasiswa : data,
+            currentMahasiswa : tmp
 
         })
-        // alert("ini current mahasiswa" +" "+ JSON.stringify(this.state.currentMahasiswa))
         // alert(this.state.currentMahasiswa)
         
     }
 
     async editModalHandler(data){
-        // let tmp = {}
-        // this.state.mahasiswa.map((row)=>{
-        //     if(kode_mahasiswa == row.kode_mahasiswa){
-        //         tmp = row
-        //     }
-        // })
+        let tmp = {}
+        this.state.mahasiswa.map((row)=>{
+            if(data.kode_mahasiswa == row.kode_mahasiswa){
+                tmp = row
+            }
+        })
         await this.setState({
-            currentMahasiswa : data
+            currentMahasiswa : tmp
 
         })
 
     }
     async deleteModalHandler(data){
         // alert('masuk delete'+kode_mahasiswa)
-
-        // let tmp = {}
-        // this.state.mahasiswa.map((row)=>{
-        //     if(kode_mahasiswa == row.kode_mahasiswa){
-        //         tmp = row
-        //     }
-        // })
+        // var datatmp = data.split(',')
+        alert(data.kode_mahasiswa)
+        let tmp = {}
+        this.state.mahasiswa.map((row)=>{
+            if(data.kode_mahasiswa == row.kode_mahasiswa){
+                tmp = row
+            }
+        })
         await this.setState({
-            currentMahasiswa : data
+            currentMahasiswa : tmp
 
         })
         alert("ini current mahasiswa delete "+ JSON.stringify(this.state.currentMahasiswa))
@@ -116,13 +119,13 @@ class Mahasiswa extends React.Component {
             dataSrc:"",
             data: this.state.mahasiswa,
             columns : [
-                       {title: 'no'},
-                       {title: 'kode_mahasiswa'},
-                       {title: 'nama_mahasiswa'},
-                       {title: 'kode_agama'},
-                       {title: 'alamat'},
-                       {title: 'kode_jurusan'},
-                       {title: 'hobby'},
+                       {data: 'no'},
+                       {data: 'kode_mahasiswa'},
+                       {data: 'nama_mahasiswa'},
+                       {data: 'kode_agama'},
+                       {data: 'alamat'},
+                       {data: 'kode_jurusan'},
+                       {data: 'hobby'},
                        {defaultContent: view+edit+del}
                 ],
             
@@ -151,6 +154,7 @@ class Mahasiswa extends React.Component {
         // var _=this
         window.$('#example2').on('click', 'a.editor_del', function (e) {
             e.preventDefault();
+            alert(JSON.stringify(table.row( $(this).parents('tr') ).data()))
             var data = table.row( $(this).parents('tr') ).data();
             _.deleteModalHandler(data)
            
@@ -190,7 +194,7 @@ class Mahasiswa extends React.Component {
                 <div><button class="btn btn-primary" data-toggle="modal" data-target="#create-modal-default">Tambah Mahasiswa</button></div>
                 <div class='box-body'>
                     <table id="example2" class="table table-bordered table-stripeds">
-                        {/* <thead>
+                        <thead>
                             <tr>
                                 <th>no</th>
                                 <th>Kode Mahasiswa</th>
@@ -201,7 +205,7 @@ class Mahasiswa extends React.Component {
                                 <th>Hobby</th>
                                 <th>action</th>
                             </tr>
-                        </thead> */}
+                        </thead>
                         
                     
                     </table>

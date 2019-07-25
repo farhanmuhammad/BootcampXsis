@@ -29,8 +29,6 @@ class CreateMahasiswa extends React.Component{
     }
     changeHandler(e){ // untuk bisa ngisi form
         let tmp=this.state.formdata
-        // alert("ini value "+ e.target.value)
-        // alert("ini name "+ e.target.name)
         tmp[e.target.name]=e.target.value
         this.setState({
             formdata:tmp
