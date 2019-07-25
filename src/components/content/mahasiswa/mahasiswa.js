@@ -73,30 +73,31 @@ class Mahasiswa extends React.Component {
         
     }
 
-    async editModalHandler(kode_mahasiswa){
-        let tmp = {}
-        this.state.mahasiswa.map((row)=>{
-            if(kode_mahasiswa == row.kode_mahasiswa){
-                tmp = row
-            }
-        })
+    async editModalHandler(data){
+        // let tmp = {}
+        // this.state.mahasiswa.map((row)=>{
+        //     if(kode_mahasiswa == row.kode_mahasiswa){
+        //         tmp = row
+        //     }
+        // })
         await this.setState({
-            currentMahasiswa : tmp
+            currentMahasiswa : data
 
         })
 
     }
     async deleteModalHandler(data){
-        alert('masuk delete')
-        let tmp = {}
-        this.state.mahasiswa.map((row)=>{
-            if(data== row.data)
-            {
-                tmp = row
-            }
-        })
+        // alert('masuk delete'+kode_mahasiswa)
+
+        // let tmp = {}
+        // this.state.mahasiswa.map((row)=>{
+        //     if(kode_mahasiswa == row.kode_mahasiswa){
+        //         tmp = row
+        //     }
+        // })
         await this.setState({
-            currentMahasiswa : tmp
+            currentMahasiswa : data
+
         })
         alert("ini current mahasiswa delete "+ JSON.stringify(this.state.currentMahasiswa))
     }
@@ -140,14 +141,14 @@ class Mahasiswa extends React.Component {
             _.viewModalHandler(data)
            
         } );
-        var _=this
+        // var _=this
         window.$('#example2').on('click', 'a.editor_edit', function (e) {
             e.preventDefault();
             var data = table.row( $(this).parents('tr') ).data();
             _.editModalHandler(data)
            
         } );
-        var _=this
+        // var _=this
         window.$('#example2').on('click', 'a.editor_del', function (e) {
             e.preventDefault();
             var data = table.row( $(this).parents('tr') ).data();

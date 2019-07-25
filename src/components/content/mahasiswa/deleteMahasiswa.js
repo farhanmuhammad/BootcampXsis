@@ -17,7 +17,7 @@ class DeleteMahasiswa extends React.Component{
         let option = {
             url: apiconfig.BASE_URL+apiconfig.ENDPOINTS.MAHASISWA,
             method: "delete",
-            data : {kode_mahasiswa:this.props.delete_mahasiswa.kode_mahasiswa},
+            data : {kode_mahasiswa:this.props.delete_mahasiswa[1]},
             headers:{
                 "Authorization" : token
             }
@@ -39,7 +39,7 @@ class DeleteMahasiswa extends React.Component{
                 <div class="modal-dialog">
                     <div class="modal-content bg-warning">
                     <div class="modal-header">
-                        <h4 class="modal-title">Delete {this.props.delete_mahasiswa.nama_mahasiswa} ?</h4>
+                        <h4 class="modal-title">Delete {this.props.delete_mahasiswa[2]} ?</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     </div>
