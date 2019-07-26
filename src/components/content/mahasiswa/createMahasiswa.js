@@ -14,7 +14,7 @@ class CreateMahasiswa extends React.Component{
                 kode_agama:'',
                 alamat:'',
                 kode_jurusan:'',
-                hobby:[]
+                hobby:''
             },
             hobbyList:[
             {name: 'baca', isChecked: false},

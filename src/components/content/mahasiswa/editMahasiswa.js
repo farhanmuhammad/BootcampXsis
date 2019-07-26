@@ -11,7 +11,7 @@ class EditMahasiswa extends React.Component{
                 alamat: '',
                 kode_agama: '',
                 kode_jurusan: '',
-                hobby: []
+                hobby: ''
             },
             hobbyList:[
             {name: 'baca', isChecked: false},
@@ -30,16 +30,27 @@ class EditMahasiswa extends React.Component{
     
     componentWillReceiveProps(newProps) {
        
-        this.setState({
-            formdata: newProps.edit_mahasiswa
-        })
+        let tmp = this.state.formdata
+        alert("ini new props "+JSON.stringify(newProps.edit_mahasiswa[0]))
+        if(newProps.edit_mahasiswa.length > 0){
+            tmp.no = newProps.edit_mahasiswa[0].no
+            tmp.kode_mahasiswa = newProps.edit_mahasiswa[0].kode_mahasiswa
+            tmp.nama_mahasiswa = newProps.edit_mahasiswa[0].nama_mahasiswa
+            tmp.kode_agama = newProps.edit_mahasiswa[0].kode_agama
+            tmp.alamat = newProps.edit_mahasiswa[0].alamat
+            tmp.kode_jurusan = newProps.edit_mahasiswa[0].kode_jurusan
+            tmp.hobby = newProps.edit_mahasiswa[0].hobby
+            this.setState({
+                formdata:tmp
+            })
+        }
         this.state.hobbyList.map((row,i)=>{
 
             row.isChecked = false;
         })
-        if(newProps.edit_mahasiswa.hobby){ // check ada hooby apa negga
+        if(this.state.formdata.hobby){ // check ada hooby apa negga
            this.state.hobbyList.map((row,x)=>{ // looping semua hoobby list
-               newProps.edit_mahasiswa.hobby.split(',').map((row2,i)=>{ //misahin hooby dari database dan looping
+               this.state.formdata.hobby.split(',').map((row2,i)=>{ //misahin hooby dari database dan looping
                    if(row.name.toLowerCase()==row2.trim()) // chech apakah hooby 1 sama dengan hooby dari tadibase
                    {
                        row.isChecked= true;
